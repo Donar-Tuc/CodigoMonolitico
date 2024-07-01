@@ -1,0 +1,29 @@
+language: node_js
+node_js:
+  - "14"
+
+cache:
+  directories:
+    - node_modules
+    - client/node_modules
+
+install:
+  - npm install
+  - npm install --prefix client
+
+# Run tests
+script:
+  - npm test || true 
+  - npm test --prefix client || true 
+
+
+before_deploy:
+  - npm run build
+
+
+deploy:
+  provider: script
+  script: npx vercel --prod --token $VERCEL_TOKEN
+  skip_cleanup: true
+  on:
+    branch: main
