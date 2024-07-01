@@ -15,4 +15,9 @@ script:
 before_deploy:
   - npm run build
 
-
+deploy:
+  provider: script
+  script: npx vercel --prod --token $VERCEL_TOKEN
+  skip_cleanup: true
+  on:
+    branch: main
